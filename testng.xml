@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CMSVuaThoSuite">
+
+    <parameter name="browserType" value="chrome"/>
+    <parameter name="webURL" value="https://cms-vuatho-clone.vercel.app/test-management"></parameter>
+
+    <test name="SignInTest">
+        <classes>
+<!--            <class name="testcases.InputOTPTest"/>-->
+            <class name="testcases.SearchServiceTest"/>
+        </classes>
+    </test>
+</suite>
