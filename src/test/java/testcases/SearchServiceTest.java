@@ -28,8 +28,6 @@ public class SearchServiceTest extends AppiumDriver {
 
     private InputOTP inputOTP;
     private CommonPage commonPage;
-    private By contains = By.xpath("//android.view.View[@content-desc=\"Chemical Engineering\n" +
-            "Chemical Engineer\"]");
 
     public SearchServiceTest() {
     }

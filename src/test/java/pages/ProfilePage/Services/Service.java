@@ -9,7 +9,7 @@ public class Service {
         this.driver = driver;
     }
     //Add Dịch vụ
-    private By btnAddService = By.xpath("//android.view.View[@content-desc=\"+ Thêm dịch vụ\"]");
+    private By btnAddService = By.xpath("//android.widget.Button[@content-desc=\"Thêm ngay\"]");
 
     public SearchServicePage navigaitionToAddService () {
         driver.findElement(btnAddService).click();
