@@ -36,27 +36,10 @@ public class WalletBalanceChecker {
 
         Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"), "Vui lòng không để trống số tiền" );
     }
-    private void checkMinimumDepositAmount() {
+    public void checkMinimumDepositAmount(String money) {
 
-        WebElement errorElement = driver.findElement(textIfNull);
-        String errorMessage = errorElement.getAttribute("content-desc");
-        Assert.assertEquals(errorMessage, "Vui lòng không để trống số tiền");
-    }
-
-
-
-    public void checkDepositUnder10 (String money) {
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        driver.findElement(btnDeposit).click();
-
-        WebElement inputMOney2 = wait.until(ExpectedConditions.elementToBeClickable(inputMoney));
-        inputMOney2.click();
-        inputMOney2.sendKeys(money);
-        inputMOney2.clear();
-        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"),"Vui lòng không để trống số tiền");
-
+        driver.findElement(inputMoney).sendKeys(money);
+        Assert.assertEquals(driver.findElement(textIfMinimum).getAttribute("content-desc"), "Số tiền nạp tối thiểu phải là 10,000 VNĐ" );
     }
 
 }

@@ -34,6 +34,7 @@ public class WalletTest extends AppiumDriver {
 
         walletBalanceChecker.checkDeposit();
         walletBalanceChecker.checkDepositNullMessage("111");
+        walletBalanceChecker.checkMinimumDepositAmount("9000");
     }
 
 }
