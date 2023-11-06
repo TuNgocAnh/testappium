@@ -28,7 +28,12 @@ public class WalletTest extends AppiumDriver {
 
         profilePage.closeWalletEye();
 
+        profilePage.openWalletEye();
+
         walletBalanceChecker = profilePage.navigationToWallet();
+
+        walletBalanceChecker.checkDeposit();
+        walletBalanceChecker.checkDepositNullMessage("111");
     }
 
 }

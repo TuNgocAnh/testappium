@@ -6,7 +6,7 @@
 
     <test name="SignInTest">
         <classes>
-<!--            <class name="testcases.InputOTPTest"/>-->
+            <!--            <class name="testcases.InputOTPTest"/>-->
 <!--            <class name="testcases.SearchServiceTest"/>-->
             <class name="testcases.WalletTest"/>
         </classes>

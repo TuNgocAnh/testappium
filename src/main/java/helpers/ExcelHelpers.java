@@ -86,6 +86,11 @@ public class ExcelHelpers {
         return getCellData(rownum, columns.get(columnName));
     }
 
+    // Hàm để lấy số hàng trong tệp Excel
+    public int getRowCount() {
+        return sh.getPhysicalNumberOfRows();
+    }
+
     public void setCellData(String text, int rownum, int colnum) throws Exception {
         try{
             row  = sh.getRow(rownum);

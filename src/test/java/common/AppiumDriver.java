@@ -3,6 +3,7 @@ package common;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.MobileCapabilityType;
 
@@ -18,6 +19,7 @@ public class AppiumDriver{
     }
 
     @BeforeClass
+
     public void Setup() throws MalformedURLException {
 
         DesiredCapabilities cap = new DesiredCapabilities();
@@ -35,7 +37,6 @@ public class AppiumDriver{
         driver = new AndroidDriver(new URL(
                 "http://localhost:4723/wd/hub"), cap);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
     }
 
 }

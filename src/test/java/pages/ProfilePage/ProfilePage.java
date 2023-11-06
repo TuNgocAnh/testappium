@@ -2,8 +2,10 @@ package pages.ProfilePage;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import pages.ProfilePage.Services.Service;
 import pages.ProfilePage.Wallet.WalletBalanceChecker;
 
@@ -18,7 +20,7 @@ public class ProfilePage {
     private By iconVuaTho = By.xpath("//android.widget.TextView[@content-desc=\"Vua Thợ\"]");
     private By getProfile = By.xpath("//android.view.View[@content-desc=\"Tài khoản\"]");
     private By getWalletWhenOpenEye = By.xpath("//android.view.View[contains(@content-desc, 'đ')]");
-    private By getWalletWhenCloseEye = By.xpath("//android.view.View[@content-desc=\"*********\"]");
+    private By getWalletWhenCloseEye = By.xpath("//android.view.View[contains(@content-desc, 'đ')][2]");
 
     private By closeWallet = By.xpath("//android.view.View[contains(@content-desc, 'đ')]/android.widget.Button");
     private By openWallet = By.xpath("//android.view.View[contains(@content-desc=\"*********\"]/android.widget.Button");
@@ -35,15 +37,27 @@ public class ProfilePage {
         return new Service(driver);
     }
 
+    public void closeWalletEye () {
+        WebElement closeWallet =  driver.findElement(By.xpath("//android.view.View[contains(@content-desc, 'đ')]/android.widget.Button"));
+        closeWallet.click();
+        WebElement contentCloseWallet =  driver.findElement(By.xpath("//android.view.View[@content-desc=\"*********\"]"));
+
+        Assert.assertEquals(contentCloseWallet.getAttribute("content-desc"), "*********");
+    }
+
+    public void openWalletEye () {
+        WebElement openWallet =  driver.findElement(By.xpath("//android.view.View[@content-desc=\"*********\"]/android.widget.Button"));
+        openWallet.click();
+        WebElement contentCloseWallet =  driver.findElement(By.xpath("//android.view.View[contains(@content-desc, 'đ')][2]"));
+
+        Assert.assertTrue(contentCloseWallet.getAttribute("content-desc").contains("đ"), "Khi mở mắt ví không hiển thị số tiền");
+    }
+
     public WalletBalanceChecker navigationToWallet () {
         driver.findElement(getWalletWhenCloseEye).click();
         return new WalletBalanceChecker(driver);
     }
 
-    public void openWalletEye () {
-        driver.findElement(openWallet).click();
-    }
-    public void closeWalletEye () {
-        driver.findElement(closeWallet).click();
-    }
+
+
 }

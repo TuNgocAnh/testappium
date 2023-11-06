@@ -70,48 +70,38 @@ public class SearchServiceTest extends AppiumDriver {
         //Vào thêm dịch vụ
 
         searchServicePage = service.navigaitionToAddService();
+
     }
 
-    @Test(priority = 2)
-    public void search() throws Exception {
+//    @Test(priority = 2)
+//    public void search() throws Exception {
+//
+//        ExcelHelpers excel = new ExcelHelpers();
+//        excel.setExcelFile(FrameworkConstants.EXCEL_CAREER, "Dịch vụ");
+//
+//        int rowCount = excel.getRowCount();
+//
+//        for (int i = 1; i <= rowCount; i++) {
+//            String keyword = excel.getCellData("Nghề", i);
+//
+//            searchServicePage.searchCorrectService(keyword);
+//        }
+//    }
+
+
+    @Test(priority = 3)
+    public void TC_searchInCorrectService() throws Exception {
 
         ExcelHelpers excel = new ExcelHelpers();
-        excel.setExcelFile(FrameworkConstants.EXCEL_CAREER, "Dịch vụ");
+        excel.setExcelFile(FrameworkConstants.EXCEL_CAREER, "Dịch vụ (Sai)");
 
-        String keyword = excel.getCellData("Career", 1);
+        String keyword = excel.getCellData("Nghề", 2);
+//        int rowCount = excel.getRowCount();
+//        for (int i = 1; i <= rowCount; i++) {
+//            String keyword = excel.getCellData("Nghề", i);
+        searchServicePage.searchIncorrectService(keyword);
 
-        searchServicePage.searchService(keyword);
-
-
-//        Assert.assertTrue(elementText.toUpperCase().contains(keyword.toUpperCase()));
-
-//        Assert.assertTrue(searchServicePage.compareSearchResult3(), "Kết quả tìm kiếm không khớp với từ khoá: " + keyword);
-
-
-
-//        Thread.sleep(2000);
-//
-//        System.out.println(searchServicePage.getSearchResultElementsText());
-//
-//        boolean searchResult = searchServicePage.compareSearchResult();
-//
-//        boolean searchResult2 = searchServicePage.compareSearchResult2();
-//
-//
-//        // In ra kết quả thực tế
-//        System.out.println("Kết quả tìm kiếm: " + searchResult);
-//
-//        Assert.assertTrue(searchResult2, "Kết quả tìm kiếm không khớp với từ khoá: " + keyword);
-
-
-
-
-//        String actualText = searchServicePage.searchService(excel.getCellData("Career", 1));
-
-//        String expectedText = String.valueOf(searchServicePage.compareSearchResult());
-
-
-//        Assert.assertEquals(actualText, expectedText);
+        searchServicePage.returnToStart();
 
     }
 

@@ -2,23 +2,61 @@ package pages.ProfilePage.Wallet;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.time.Duration;
 
 public class WalletBalanceChecker {
     private AndroidDriver driver;
-
-    private By closeWallet = By.xpath("//android.view.View[contains(@content-desc, 'đ']/android.widget.Button");
-    private By openWallet = By.xpath("//android.view.View[contains(@content-desc=\"*********\"]/android.widget.Button");
-
-
+    private By btnDeposit = By.xpath ("//android.widget.ImageView[@content-desc=\"Nạp tiền\"]");
+    private By inputMoney = By.xpath ("//android.widget.EditText");
+    private By textIfNull = By.xpath ("//android.view.View[@content-desc=\"Vui lòng không để trống số tiền\"]");
+    private By textIfMinimum = By.xpath("//android.view.View[@content-desc=\"Số tiền nạp tối thiểu phải là 10,000 VNĐ\"]");
 
     public WalletBalanceChecker(AndroidDriver driver) {
         this.driver = driver;
     }
 
-    public void openWalletEye () {
-        driver.findElement(openWallet).click();
+    public void checkDeposit () {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.findElement(btnDeposit).click();
+
+        driver.findElement(inputMoney).click();
+
+//        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"),"Vui lòng không để trống số tiền");
     }
-    public void closeWalletEye () {
-        driver.findElement(closeWallet).click();
+    public void checkDepositNullMessage(String money) {
+        driver.findElement(inputMoney).sendKeys(money);
+        driver.findElement(inputMoney).clear();
+
+        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"), "Vui lòng không để trống số tiền" );
     }
+    private void checkMinimumDepositAmount() {
+
+        WebElement errorElement = driver.findElement(textIfNull);
+        String errorMessage = errorElement.getAttribute("content-desc");
+        Assert.assertEquals(errorMessage, "Vui lòng không để trống số tiền");
+    }
+
+
+
+    public void checkDepositUnder10 (String money) {
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        driver.findElement(btnDeposit).click();
+
+        WebElement inputMOney2 = wait.until(ExpectedConditions.elementToBeClickable(inputMoney));
+        inputMOney2.click();
+        inputMOney2.sendKeys(money);
+        inputMOney2.clear();
+        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"),"Vui lòng không để trống số tiền");
+
+    }
+
 }
