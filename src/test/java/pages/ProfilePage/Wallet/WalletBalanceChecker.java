@@ -10,36 +10,25 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class WalletBalanceChecker {
-    private AndroidDriver driver;
-    private By btnDeposit = By.xpath ("//android.widget.ImageView[@content-desc=\"Nạp tiền\"]");
-    private By inputMoney = By.xpath ("//android.widget.EditText");
-    private By textIfNull = By.xpath ("//android.view.View[@content-desc=\"Vui lòng không để trống số tiền\"]");
-    private By textIfMinimum = By.xpath("//android.view.View[@content-desc=\"Số tiền nạp tối thiểu phải là 10,000 VNĐ\"]");
 
     public WalletBalanceChecker(AndroidDriver driver) {
         this.driver = driver;
     }
+    private AndroidDriver driver;
+    private By btnDeposit = By.xpath ("//android.widget.ImageView[@content-desc=\"Nạp tiền\"]");
+    private By transactionHistory = By.xpath("//android.view.View[@content-desc=\"Lịch sử giao dịch\"]");
 
-    public void checkDeposit () {
+    public Deposit checkDeposit () {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         driver.findElement(btnDeposit).click();
-
-        driver.findElement(inputMoney).click();
-
-//        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"),"Vui lòng không để trống số tiền");
+        return new Deposit(driver);
     }
-    public void checkDepositNullMessage(String money) {
-        driver.findElement(inputMoney).sendKeys(money);
-        driver.findElement(inputMoney).clear();
 
-        Assert.assertEquals(driver.findElement(textIfNull).getAttribute("content-desc"), "Vui lòng không để trống số tiền" );
-    }
-    public void checkMinimumDepositAmount(String money) {
-
-        driver.findElement(inputMoney).sendKeys(money);
-        Assert.assertEquals(driver.findElement(textIfMinimum).getAttribute("content-desc"), "Số tiền nạp tối thiểu phải là 10,000 VNĐ" );
+    public TransactionHistory navigationToTransactionHistory () {
+        driver.findElement(transactionHistory).click();
+        return new TransactionHistory(driver);
     }
 
 }

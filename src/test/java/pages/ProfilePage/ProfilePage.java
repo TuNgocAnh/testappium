@@ -28,7 +28,7 @@ public class ProfilePage {
 
     public void navigateToProfilePage() throws InterruptedException {
         driver.findElement(iconVuaTho).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Đợi tối đa 10 giây
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
         wait.until(ExpectedConditions.elementToBeClickable(getProfile));
         driver.findElement(getProfile).click();
     }
