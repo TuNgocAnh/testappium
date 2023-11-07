@@ -1,4 +1,4 @@
-package pages.StorePage;
+package functions.StorePage;
 
 import io.appium.java_client.android.AndroidDriver;
 

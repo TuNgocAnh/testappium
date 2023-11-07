@@ -2,21 +2,21 @@ package testcases;
 
 import common.AppiumDriver;
 import constants.FrameworkConstants;
+import functions.AccountFunction.ProfileFunction;
 import helpers.ExcelHelpers;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.ProfilePage.ProfilePage;
-import pages.logins.InputOTP;
-import pages.logins.LoginPage;
+import functions.LoginFunction.InputOTPFunction;
+import functions.LoginFunction.LoginPageFunction;
 
 
 public class InputOTPTest extends AppiumDriver {
 
     private AndroidDriver driver;
-    private InputOTP inputOTP;
-    private LoginPage loginPage;
-    private ProfilePage profilePage;
+    private InputOTPFunction inputOTP;
+    private LoginPageFunction loginPage;
+    private ProfileFunction profilePage;
 
     public InputOTPTest(AndroidDriver driver) {
         super();
@@ -29,7 +29,7 @@ public class InputOTPTest extends AppiumDriver {
 
     @Test
     public void TC_LoginOTPSuccess() throws Exception {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPageFunction(driver);
 
         ExcelHelpers excel = new ExcelHelpers();
         excel.setExcelFile(FrameworkConstants.EXCEL_LOGIN, "Sheet1");

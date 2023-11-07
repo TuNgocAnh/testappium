@@ -5,15 +5,15 @@ import io.appium.java_client.android.AndroidDriver;
 import helpers.ExcelHelpers;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.logins.InputOTP;
-import pages.logins.LoginPage;
+import functions.LoginFunction.InputOTPFunction;
+import functions.LoginFunction.LoginPageFunction;
 import common.AppiumDriver;
 
 
 public class LoginPageTest extends AppiumDriver {
     private AndroidDriver driver;
-    private LoginPage loginPage;
-    private InputOTP inputOTP;
+    private LoginPageFunction loginPage;
+    private InputOTPFunction inputOTP;
 
     @BeforeClass
     public void setup() {
@@ -23,7 +23,7 @@ public class LoginPageTest extends AppiumDriver {
     @Test
     public void TC_LoginSuccess() throws Exception {
 
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPageFunction(driver);
 
         ExcelHelpers excel = new ExcelHelpers();
         excel.setExcelFile(FrameworkConstants.EXCEL_LOGIN, "Sheet1");

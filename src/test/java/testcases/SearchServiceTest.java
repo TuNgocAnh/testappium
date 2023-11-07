@@ -3,30 +3,26 @@ package testcases;
 import common.AppiumDriver;
 import common.CommonPage;
 import constants.FrameworkConstants;
+import functions.LoginFunction.LoginPageFunction;
 import helpers.ExcelHelpers;
 import io.appium.java_client.android.AndroidDriver;
-import org.bouncycastle.tsp.TSPUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.ProfilePage.ProfilePage;
-import pages.ProfilePage.Services.SearchServicePage;
-import pages.ProfilePage.Services.Service;
-import pages.logins.InputOTP;
-import pages.logins.LoginPage;
+import functions.AccountFunction.ProfileFunction;
+import functions.AccountFunction.ServicesFunction.SearchServiceFunction;
+import functions.AccountFunction.ServicesFunction.ServiceFunction;
+import functions.LoginFunction.InputOTPFunction;
 
 public class SearchServiceTest extends AppiumDriver {
 
     private AndroidDriver driver;
-    private Service service;
-    private SearchServicePage searchServicePage;
-    private ProfilePage profilePage;
+    private ServiceFunction service;
+    private SearchServiceFunction searchServicePage;
+    private ProfileFunction profilePage;
     private InputOTPTest inputOTPTest;
-    private LoginPage loginPage;
+    private LoginPageFunction loginPage;
 
-    private InputOTP inputOTP;
+    private InputOTPFunction inputOTP;
     private CommonPage commonPage;
 
     public SearchServiceTest() {
@@ -40,7 +36,7 @@ public class SearchServiceTest extends AppiumDriver {
 //    @Test (priority = 1)
 //    public void TC_LoginOTPSuccess() throws Exception {
 //
-//        loginPage = new LoginPage(driver);
+//        loginPage = new LoginPageFunction(driver);
 //
 //        ExcelHelpers excel = new ExcelHelpers();
 //        excel.setExcelFile(FrameworkConstants.EXCEL_LOGIN, "Sheet1");
@@ -57,7 +53,7 @@ public class SearchServiceTest extends AppiumDriver {
 
     public void TC_SeachSucess() throws Exception {
 
-        profilePage = new ProfilePage(driver);
+        profilePage = new ProfileFunction(driver);
 
         //Vào mục profile
 //        profilePage = commonPage.navigateToProfilePage();

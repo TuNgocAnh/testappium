@@ -1,51 +1,54 @@
 package testcases;
 
 import common.AppiumDriver;
+import functions.AccountFunction.ProfileFunction;
 import io.appium.java_client.android.AndroidDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.ProfilePage.ProfilePage;
-import pages.ProfilePage.Wallet.Deposit;
-import pages.ProfilePage.Wallet.TransactionHistory;
-import pages.ProfilePage.Wallet.WalletBalanceChecker;
+import functions.AccountFunction.Wallet.DepositFunction;
+import functions.AccountFunction.Wallet.TransactionHistoryFunction;
+import functions.AccountFunction.Wallet.WalletBalanceCheckerFunction;
 
 public class WalletTest extends AppiumDriver {
 
     private AndroidDriver driver;
-    private ProfilePage profilePage;
-    private WalletBalanceChecker walletBalanceChecker;
-    private Deposit deposit;
-    private TransactionHistory transactionHistory;
+    private ProfileFunction profileFunction;
+    private WalletBalanceCheckerFunction walletBalanceCheckerFunction;
+    private DepositFunction depositFunction;
+    private TransactionHistoryFunction transactionHistory;
 
     @BeforeClass
     public void setup() {
         driver = getDriver();
     }
 
+//    public WalletTest (){
+//        profileFunction = new ProfileFunction(driver);
+//    }
+
     @Test(priority = 1)
     public void TC_CheckBalanceWallet() throws Exception {
-        profilePage = new ProfilePage(driver);
-        profilePage.navigateToProfilePage();
-        profilePage.closeWalletEye();
+        profileFunction = new ProfileFunction(driver);
+        profileFunction.navigateToProfilePage();
+        profileFunction.onToOffWalletEye();
 
-        profilePage.openWalletEye();
+        profileFunction.offToOnWalletEye();
 
-        walletBalanceChecker = profilePage.navigationToWallet();
+        walletBalanceCheckerFunction = profileFunction.navigationToWallet();
 
-        deposit = walletBalanceChecker.checkDeposit();
-        deposit.checkDepositNullMessage("5000");
-        deposit.checkMinimumDepositAmount("9999");
+        depositFunction = walletBalanceCheckerFunction.checkDeposit();
+        depositFunction.checkDepositNullMessage("5000");
+        depositFunction.checkMinimumDepositAmount("9999");
 //        deposit.checkDepostEqual10("10000");
     }
 
     @Test(priority = 2)
     public void TC_CheckTransaction () throws InterruptedException {
-        profilePage = new ProfilePage(driver);
+        profileFunction = new ProfileFunction(driver);
 
-        profilePage.navigateToProfilePage();
-        walletBalanceChecker = profilePage.navigationToWallet();
-        transactionHistory = walletBalanceChecker.navigationToTransactionHistory();
+        profileFunction.navigateToProfilePage();
+        walletBalanceCheckerFunction = profileFunction.navigationToWallet();
+        transactionHistory = walletBalanceCheckerFunction.navigationToTransactionHistory();
 
     }
 

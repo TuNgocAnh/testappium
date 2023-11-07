@@ -1,17 +1,11 @@
-package pages.logins;
+package functions.LoginFunction;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.List;
-
-public class LoginPage {
+public class LoginPageFunction {
     private AndroidDriver driver;
-    public LoginPage (AndroidDriver driver) {
+    public LoginPageFunction(AndroidDriver driver) {
         this.driver = driver;
     }
 
@@ -30,13 +24,13 @@ public class LoginPage {
         driver.findElement(btnDangNhap).click();
     }
 
-    public InputOTP loginPhoneSucess (String phone) {
+    public InputOTPFunction loginPhoneSucess (String phone) {
         openLoginPage();
         driver.findElement(By.className("android.widget.EditText")).sendKeys(phone);
 
         driver.findElement(btnTiepTuc).click();
 
-        return new InputOTP(driver);
+        return new InputOTPFunction(driver);
     }
 
 //    public void loginOTPSucess (String OTP) throws InterruptedException {

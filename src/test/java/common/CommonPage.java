@@ -1,12 +1,11 @@
 package common;
 
+import functions.ActivitiesFunction.ActivitiesFunction;
+import functions.AccountFunction.ProfileFunction;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import pages.ActivitiesPage.ActivitiesPage;
-import pages.FindJobPage.FindJobPage;
-import pages.HomePage.HomePage;
-import pages.ProfilePage.ProfilePage;
-import pages.StorePage.StorePage;
+import functions.FindJobFunction.FindJobFunction;
+import functions.StorePage.StorePage;
 
 public class CommonPage {
 
@@ -29,11 +28,6 @@ public class CommonPage {
     //Nhập search Dịch vụ
     private By inputsearchService = By.className("android.widget.EditText");
 
-    public HomePage navigateToHomePage() {
-        // Thực hiện các tương tác để đến trang chính và trả về HomePage
-        driver.findElement(getHomePage).click();
-        return new HomePage(driver);
-    }
 
     public StorePage navigateToStorePage() {
         // Thực hiện các tương tác để đến trang cửa hàng và trả về StorePage
@@ -41,23 +35,23 @@ public class CommonPage {
         return new StorePage(driver);
     }
 
-    public FindJobPage navigateToFindJobPage() {
-        // Thực hiện các tương tác để đến trang tìm việc làm và trả về FindJobPage
+    public FindJobFunction navigateToFindJobPage() {
+        // Thực hiện các tương tác để đến trang tìm việc làm và trả về FindJobFunction
         driver.findElement(getFindJob).click();
-        return new FindJobPage(driver);
+        return new FindJobFunction(driver);
     }
 
-    public ActivitiesPage navigateToActivitiesPage() {
-        // Thực hiện các tương tác để đến trang hoạt động và trả về ActivitiesPage
+    public ActivitiesFunction navigateToActivitiesPage() {
+        // Thực hiện các tương tác để đến trang hoạt động và trả về ActivitiesFunction
         driver.findElement(getActivities).click();
-        return new ActivitiesPage(driver);
+        return new ActivitiesFunction(driver);
     }
 
-    public ProfilePage navigateToProfilePage() throws InterruptedException {
-        // Thực hiện các tương tác để đến trang hồ sơ và trả về ProfilePage
+    public ProfileFunction navigateToProfilePage() throws InterruptedException {
+        // Thực hiện các tương tác để đến trang hồ sơ và trả về ProfileFunction
         driver.findElement(getProfile).click();
 
-        return new ProfilePage(driver);
+        return new ProfileFunction(driver);
     }
 
 }

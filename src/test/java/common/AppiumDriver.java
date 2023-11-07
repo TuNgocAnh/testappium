@@ -41,11 +41,4 @@ public class AppiumDriver{
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    @AfterMethod
-    public void tearDown() throws IOException {
-
-        driver.closeApp();
-        driver.launchApp();
-    }
-
 }

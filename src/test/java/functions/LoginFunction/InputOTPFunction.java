@@ -1,14 +1,13 @@
-package pages.logins;
+package functions.LoginFunction;
 
 import common.CommonPage;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import pages.ProfilePage.ProfilePage;
 
-public class InputOTP {
+public class InputOTPFunction {
     private AndroidDriver driver;
 
-    public InputOTP(AndroidDriver driver) {
+    public InputOTPFunction(AndroidDriver driver) {
         this.driver = driver;
     }
 
@@ -24,8 +23,5 @@ public class InputOTP {
         }
         return new CommonPage(driver);
     }
-//    public ProfilePage navigateToProfile (){
-//        driver.findElement(navigationToProfile).click();
-//        return new ProfilePage(driver);
-//        }
+
 }
