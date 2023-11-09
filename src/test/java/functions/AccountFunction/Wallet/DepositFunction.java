@@ -1,9 +1,11 @@
 package functions.AccountFunction.Wallet;
 
+import functions.AccountFunction.ProfileFunction;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.AccountPage.Wallet.DepositPage;
+import pages.AccountPage.Wallet.WalletBalanceCheckerPage;
 
 public class DepositFunction {
     private AndroidDriver driver;
@@ -12,6 +14,7 @@ public class DepositFunction {
         this.driver = driver;
     }
     DepositPage depositPage = new DepositPage();
+    WalletBalanceCheckerPage walletBalanceCheckerPage = new WalletBalanceCheckerPage();
 
     public void checkDepositNullMessage(String money) {
         driver.findElement(depositPage.inputMoney).click();
@@ -41,5 +44,11 @@ public class DepositFunction {
 
     //Hàm chuyển qua màn hình Lịch sử giao dịch
 
+    //Hàm back về trang profile
+    public ProfileFunction returnToProfile() {
+        driver.findElement(depositPage.btnBack).click();
+        driver.findElement(walletBalanceCheckerPage.btnBack).click();
+        return new ProfileFunction(driver);
+    }
 
 }

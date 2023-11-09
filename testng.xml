@@ -8,7 +8,11 @@
         <classes>
 <!--            <class name="testcases.InputOTPTest"/>-->
 <!--            <class name="testcases.SearchServiceTest"/>-->
-            <class name="testcases.WalletTest"/>
+            <class name="testcases.WalletTest">
+                <methods>
+                    <include name="TC_TimeOptionTransaction" />
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

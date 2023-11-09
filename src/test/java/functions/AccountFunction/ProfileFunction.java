@@ -1,28 +1,26 @@
 package functions.AccountFunction;
 
+import common.CommonPage;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import functions.AccountFunction.ServicesFunction.ServiceFunction;
-import functions.AccountFunction.Wallet.WalletBalanceCheckerFunction;
+import functions.AccountFunction.Wallet.WalletFunction;
 import pages.AccountPage.ProfilePage;
-
-import java.time.Duration;
 
 public class ProfileFunction {
     private AndroidDriver driver;
+    private CommonPage commonPage;
     public ProfileFunction(AndroidDriver driver) {
         this.driver = driver;
+        commonPage = new CommonPage(driver);
     }
     ProfilePage profilePage = new ProfilePage();
 
     public void navigateToProfilePage() throws InterruptedException {
         driver.findElement(profilePage.iconVuaTho).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Đợi tối đa 10 giây
-        wait.until(ExpectedConditions.elementToBeClickable(profilePage.getProfile));
+
+        commonPage.waitForElementVisible(profilePage.getProfile);
+
         driver.findElement(profilePage.getProfile).click();
     }
     public ServiceFunction navigationToGetServices () {
@@ -31,20 +29,17 @@ public class ProfileFunction {
     }
 
     public void onToOffWalletEye () {
-
         driver.findElement(profilePage.onToOffEye).click();
-
         Assert.assertEquals(driver.findElement(profilePage.contentOffEye).getAttribute("content-desc"), "*********");
     }
 
     public void offToOnWalletEye () {
         driver.findElement(profilePage.offToOnEye).click();
-
-        Assert.assertTrue(driver.findElement(profilePage.contentOnEye).getAttribute("content-desc").contains("đ"), "Khi mở mắt ví không hiển thị số tiền");
+        commonPage.verifyAttrContains(profilePage.contentOnEye,"content-desc","đ","Khi mở mắt ví không hiển thị số tiền");
     }
 
-    public WalletBalanceCheckerFunction navigationToWallet () {
+    public WalletFunction navigationToWallet () {
         driver.findElement(profilePage.getWalletWhenOnEye).click();
-        return new WalletBalanceCheckerFunction(driver);
+        return new WalletFunction(driver);
     }
 }
