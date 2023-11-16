@@ -52,10 +52,15 @@ public class TransactionHistoryFunction {
         return new ChooseTimeInTransactionFunc(driver);
     }
 
-    public ProfileFunction returnToProfile() {
+    public FilterFunction navigateToFilter() {
+        commonPage.clickElement(transactionHistoryPage.btnFilter);
+        return new FilterFunction(driver);
+    }
 
-        driver.findElement(transactionHistoryPage.btnBack).click();
-        driver.findElement(walletBalanceCheckerPage.btnBack).click();
+
+    public ProfileFunction returnToProfile() {
+        commonPage.clickElement(transactionHistoryPage.btnBack);
+        commonPage.clickElement(walletBalanceCheckerPage.btnBack);
         return new ProfileFunction(driver);
     }
 

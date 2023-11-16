@@ -8,6 +8,6 @@ public class DepositPage {
     public By textIfMinimum = By.xpath("//android.view.View[@content-desc=\"Số tiền nạp tối thiểu phải là 10,000 VNĐ\"]");
     public By btnDeposit = By.xpath("(//android.view.View[@content-desc=\"Nạp tiền\"])[2]");
     public By btnBack = By.xpath("(//android.view.View[@content-desc=\"Nạp tiền\"])[1]");
-
+    public By momoSource = By.xpath("//android.widget.ImageView[@content-desc=\"Momo\"]");
 
 }

@@ -8,6 +8,7 @@ public class TransactionHistoryPage {
     public By transactionList = By.className("android.widget.ImageView");
     public By textNull = By.xpath("//android.view.View[@content-desc=\"Bạn vẫn chưa có đơn rút tiền nào\"]");
     public By chooseTime = By.xpath("//android.view.View[@content-desc=\"Chọn thời gian\"]");
+    public By btnFilter = By.xpath("//android.view.View[@content-desc=\"Tất cả\"]");
     public By allTime = By.xpath("//android.view.View[@content-desc=\"Tất cả\"]");
     public By oneMonth = By.xpath("//android.view.View[@content-desc=\"1 tháng\"]");
     public By threeMonth = By.xpath("//android.view.View[@content-desc=\"3 tháng\"]");

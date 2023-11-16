@@ -9,6 +9,11 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.collections.Lists;
 import pages.AccountPage.Wallet.TransactionHistoryPage;
 import pages.AccountPage.Wallet.WalletBalanceCheckerPage;
@@ -17,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class ChooseTimeInTransactionFunc {
     private AndroidDriver driver;
@@ -33,111 +39,16 @@ public class ChooseTimeInTransactionFunc {
 
 
     public void closetransHistory() {
-        commonPage.clickElement(transactionHistoryPage.oneMonth);
         commonPage.clickElement(transactionHistoryPage.btnClose);
     }
 
-
-    //        List<WebElement> elements = driver.findElements(transactionHistoryPage.transactionList);
-//        commonPage.waitForElementVisible(transactionHistoryPage.transactionList);
-//        commonPage.scrollToBottomOfPage();
-//        System.out.println(elements.size());
     public void transHistory_OneMonth() {
         commonPage.clickElement(transactionHistoryPage.oneMonth);
         commonPage.clickElement(transactionHistoryPage.btnConfirm);
 
-        String scrollToEnd = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollToEnd(1)";
+        commonPage.sortByDateAndRange(transactionHistoryPage.transactionList,0.95,0.1625,2,30);
 
-        int maxScrollAttempts = 10;
-
-        for (int i2 = 0; i2 < maxScrollAttempts; i2++) {
-
-            List<WebElement> elements = driver.findElements(transactionHistoryPage.transactionList);
-
-            int elementCount = 0;
-
-            for (WebElement element : elements) {
-                // Kiểm tra nếu phần tử hiển thị (có thể sử dụng phương thức isDisplayed())
-                if (element.isDisplayed()) {
-                    elementCount++;
-                }
-            }
-
-            System.out.println("Số phần tử hiển thị: " + elementCount);
-
-            List<String> dates = new ArrayList<>();
-
-            for (WebElement element : elements) {
-                String contentDesc = element.getAttribute("content-desc");
-
-                //Xóa bớt số cho đỡ rối
-//                System.out.println(contentDesc);
-
-                String date = contentDesc.split("\n")[1]; // Lấy phần ngày từ chuỗi
-                dates.add(date);
-                System.out.println("Ngày: " + dates);
-            }
-
-            boolean isSorted = true;
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-            for (int i = 1; i < dates.size(); i++) {
-                try {
-                    Date date1 = dateFormat.parse(dates.get(i - 1));
-                    Date date2 = dateFormat.parse(dates.get(i));
-
-                    if (date1.compareTo(date2) < 0) {
-                        isSorted = false;
-                        break;
-
-
-                    }
-                } catch (ParseException e) {
-                    // Xử lý lỗi khi không thể chuyển đổi ngày từ chuỗi
-                    System.out.println("Lỗi chuyển đổi ngày: " + e.getMessage());
-                }
-            }
-
-            if (isSorted) {
-                System.out.println("Danh sách đã sắp xếp giảm dần theo ngày.");
-            } else {
-                System.out.println("Danh sách không sắp xếp giảm dần theo ngày.");
-            }
-
-            //Kiểm tra xem có lịch sử nào vượt quá 1 tháng không
-//            if (areFirstAndLastDatesWithin30Days(dates)) {
-//                System.out.println("Ngày đầu và cuối nằm trong phạm vi 30 ngày.");
-//            } else {
-//                System.out.println("Ngày đầu hoặc cuối vượt quá 30 ngày.");
-//            }
-
-            try {
-                // Thực hiện cuộn trang
-                commonPage.waitForElementPresent(transactionHistoryPage.transactionList);
-                commonPage.waitForElementVisible(transactionHistoryPage.transactionList);
-                driver.findElement(MobileBy.AndroidUIAutomator(scrollToEnd));
-
-            } catch (NoSuchElementException e) {
-                break;
-            }
-        }
     }
-
-//    public boolean areFirstAndLastDatesWithin30Days(List<String> dates) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//
-//        try {
-//            Date firstDate = dateFormat.parse(dates.get(0));
-//            Date lastDate = dateFormat.parse(dates.get(dates.size() - 1));
-//
-//            return lastDate;
-//        } catch (ParseException e) {
-//            // Xử lý lỗi khi không thể chuyển đổi ngày từ chuỗi
-//            System.out.println("Lỗi chuyển đổi ngày: " + e.getMessage());
-//            return false;
-//        }
-//    }
 
 
     public void transHistory_ThreeMonth() {
@@ -145,75 +56,47 @@ public class ChooseTimeInTransactionFunc {
         commonPage.clickElement(transactionHistoryPage.btnConfirm);
     }
 
-    public void transHistory_SixMonth() {
+    public void transHistory_SixMonth(boolean clickConfirmButton) {
         commonPage.clickElement(transactionHistoryPage.sixMonth);
-        commonPage.clickElement(transactionHistoryPage.btnConfirm);
+
+        if (clickConfirmButton) {
+            commonPage.clickElement(transactionHistoryPage.btnConfirm);
+        }
     }
 
-    public void transHistory_TimeOptions(double start_xd, double start_yd, double end_xd, double end_yd) throws InterruptedException {
+    public void transHistory_TimeOptions(boolean clickConfirmButton, boolean sortTransaction) throws InterruptedException {
         commonPage.clickElement(transactionHistoryPage.timeOptions);
 
 
-//    driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().resourceId(\"android.widget.SeekBar\").scrollable(true)).scrollIntoView(new UiSelector().text(\"tháng 1\"))"));
-//    driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().driver.findElement(By.className(\"android.widget.SeekBar\")).scrollable(true)).scrollIntoView(new UiSelector().text(\"tháng 1\"))"));
-//    driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().driver.findElement(By.xpath(\"//android.widget.SeekBar[@content-desc=\"tháng 10\"]\")).scrollable(true)).scrollIntoView(new UiSelector().text(\"tháng 1\"))"));
+        //Từ ngày 7/11/2023 đến ngày 8/11/2023
+        commonPage.scrollVeriticalCalendar(By.xpath("//android.widget.SeekBar[@content-desc=\"7\"]"), 0.53125,0.57,3.6,30 );
+        commonPage.scrollVeriticalCalendar(By.xpath("//android.widget.SeekBar[@content-desc=\"tháng 11\"]"), 0.57,0.53125,2,12);
+//        commonPage.scrollVeriticalCalendar(By.xpath("//android.widget.SeekBar[@content-desc=\"2024\"]"),0.57 ,0.53125,1.5,20);
 
-        //Thêm hàm chọn ngày
-//        commonPage.testscroll("tháng 1");
+        commonPage.clickElement(By.xpath("//android.view.View[@index =8]"));
 
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@content-desc=\"tháng 10\"]")).click();
-//
-//        Dimension dimension = driver.manage().window().getSize();
-//        int start_x = (int) (dimension.width * start_xd);
-//        int start_y = (int) (dimension.height *start_yd);
-//        int end_x = (int) (dimension.width * end_xd);
-//        int end_y= (int) (dimension.height * end_yd);
-//        TouchAction touch = new TouchAction (driver);
-//        touch.press(PointOption.point(start_x, start_y))
-//                .waitAction(WaitOptions.waitOptions (Duration.ofSeconds (1)))
-//                .moveTo(PointOption.point (end_x, end_y)).release().perform();
-//        Thread.sleep(3000);
+        commonPage.scrollVeriticalCalendar(By.xpath("//android.widget.SeekBar[@content-desc=\"8\"]"), 0.53125,0.57,3.6,30 );
 
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@content-desc=\"23\"]")).click();
+        if (clickConfirmButton) {
+            commonPage.clickElement(transactionHistoryPage.btnConfirm);
+        }
 
+        if (sortTransaction) {
+            commonPage.sortByDateAndRange(transactionHistoryPage.transactionList, 0.97, 0.09375, 2, 1);
+        }
 
-//        Dimension windowSize = driver.manage().window().getSize();
-//        Map<String, Object> args = new HashMap<>();
-//        args.put("command", "input");
-//        args.put("args", Lists.newArrayList("swipe", windowSize.width / 4,
-//                windowSize.height / 2, windowSize.width / 4, windowSize.height));
-//        while (driver.findElements(By.xpath("//android.widget.SeekBar[@content-desc=\"23\"]")).size() == 0) {
-//            driver.executeScript("mobile: shell", args);
-//            Thread.sleep(5000);
-//        }
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@content-desc=\"23\"]")).click();
-
-//
-//        List <WebElement> values = driver.findElements(transactionHistoryPage.specificTime);
-//        for (int i=0;i<values.size();i++)
-//        {
-//            System.out.println(values.get(i).getAttribute("content-desc"));
-//        }
-
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@index=0]")).sendKeys("10");
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@index=1]")).sendKeys("tháng 8");
-//        driver.findElement(By.xpath("//android.widget.SeekBar[@index=2]")).sendKeys("2022");
-////        driver.findElement(By.xpath("//android.widget.SeekBar[@index ='1']")).sendKeys("tháng 8");
-//        values.get(0).sendKeys("10");
-//
-//
-////        values.get(0).sendKeys (Keys.TAB);
-//        values.get(1).sendKeys("tháng 8");
-////        values.get(1).sendKeys (Keys. TAB);
-//        values.get(2).sendKeys("2022");
-////        values.get(2).sendKeys (Keys. TAB);
-
-//        commonPage.clickElement(transactionHistoryPage.btnConfirm);
     }
 
-    public void transHistory_AllTime() {
+
+
+    public void transHistory_AllTime(boolean sortTransaction) {
         commonPage.clickElement(transactionHistoryPage.allTime);
+
         commonPage.clickElement(transactionHistoryPage.btnConfirm);
+
+        if (sortTransaction) {
+            commonPage.sortByDateAndRange(transactionHistoryPage.transactionList, 0.95, 0.1625, 2, 100);
+        }
     }
 
 

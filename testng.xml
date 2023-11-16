@@ -10,7 +10,11 @@
 <!--            <class name="testcases.SearchServiceTest"/>-->
             <class name="testcases.WalletTest">
                 <methods>
-                    <include name="TC_TimeOptionTransaction" />
+<!--                    <include name="TC_CheckBalanceWallet()" />-->
+<!--                    <include name="TC_DepositWalletSucess()" />-->
+<!--                    <include name="TC_DepositWalletFail_noMoney_noSource()" />-->
+<!--                    <include name="TC_DepositWalletFail" />-->
+<!--                    <include name="TC_DepositFilter()" />-->
                 </methods>
             </class>
         </classes>

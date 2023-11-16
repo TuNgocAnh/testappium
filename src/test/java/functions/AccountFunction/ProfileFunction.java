@@ -17,29 +17,29 @@ public class ProfileFunction {
     ProfilePage profilePage = new ProfilePage();
 
     public void navigateToProfilePage() throws InterruptedException {
-        driver.findElement(profilePage.iconVuaTho).click();
+        commonPage.clickElement(profilePage.iconVuaTho);
 
         commonPage.waitForElementVisible(profilePage.getProfile);
+        commonPage.clickElement(profilePage.getProfile);
 
-        driver.findElement(profilePage.getProfile).click();
     }
     public ServiceFunction navigationToGetServices () {
-        driver.findElement(profilePage.getServices).click();
+        commonPage.clickElement(profilePage.getServices);
         return new ServiceFunction(driver);
     }
 
     public void onToOffWalletEye () {
-        driver.findElement(profilePage.onToOffEye).click();
+        commonPage.clickElement(profilePage.onToOffEye);
         Assert.assertEquals(driver.findElement(profilePage.contentOffEye).getAttribute("content-desc"), "*********");
     }
 
     public void offToOnWalletEye () {
-        driver.findElement(profilePage.offToOnEye).click();
+        commonPage.clickElement(profilePage.offToOnEye);
         commonPage.verifyAttrContains(profilePage.contentOnEye,"content-desc","đ","Khi mở mắt ví không hiển thị số tiền");
     }
 
     public WalletFunction navigationToWallet () {
-        driver.findElement(profilePage.getWalletWhenOnEye).click();
+        commonPage.clickElement(profilePage.getWalletWhenOnEye);
         return new WalletFunction(driver);
     }
 }
